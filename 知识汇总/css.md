@@ -21,3 +21,4 @@ DOM结构的修改，引发dom结构的改变，发生回流
 
 回流必定会引起重。回流的代价更大
 [重绘与回流](https://blog.csdn.net/qq_42269433/article/details/81133772)
+
