@@ -42,3 +42,5 @@ function deepCopy(obj){
     return newObj
 }
 ```
+
+### 手写promise 
