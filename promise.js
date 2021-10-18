@@ -35,23 +35,23 @@ class promise {
 
 function Promise1(executor){
     var self = this 
-    self.state = 'pending'
-    self.value = undefined
-    self.reason = undefined
-    function resolve(value){
-        if(self.state === 'pending'){
-            self.state = 'fulfilled'
-            self.value = value
+    this.state = 'pending'
+    this.value = undefined
+    this.reason = undefined
+    let resolve=(value)=>{
+        if(this.state === 'pending'){
+            this.state = 'fulfilled'
+            this.value = value
         }
     }
-    function reject(reason){
-        if(self.state === 'pending'){
-            self.state = 'rejected'
-            self.reason = reason
+    let reject=(reason)=>{
+        if(this.state === 'pending'){
+            this.state = 'rejected'
+            this.reason = reason
         }
     }
     try {
-        // console.log('executor');
+        console.log(this);
         executor(resolve,reject)
     } catch (error) {
         reject(error)
@@ -59,11 +59,11 @@ function Promise1(executor){
 }
 Promise1.prototype.then = function(onFulfilled,onRejected){
     let self = this
-    if(self.state === 'fulfilled'){
-        onFulfilled(self.value)
+    if(this.state === 'fulfilled'){
+        onFulfilled(this.value)
     }
-    if(self.state === 'rejected'){
-        onRejected(self.reason)
+    if(this.state === 'rejected'){
+        onRejected(this.reason)
     }
 }
 
@@ -133,17 +133,76 @@ class Promise2 {
        
     }
 }
-console.log('1');
-var p2 = new Promise2((resolve,reject)=>{
-    setTimeout(()=>{
-        console.log('2');
-        resolve(11)
-        reject('reject')
-        console.log(4);
-    })
-})
-p2.then(
-    resolve =>{console.log(resolve);},
-    error =>{console.log(error);}
-)
-console.log('3');
+// console.log('1');
+// var p2 = new Promise2((resolve,reject)=>{
+//     setTimeout(()=>{
+//         console.log('2');
+//         resolve(11)
+//         reject('reject')
+//         console.log(4);
+//     })
+// })
+// p2.then(
+//     resolve =>{console.log(resolve);},
+//     error =>{console.log(error);}
+// )
+// console.log('3');
+
+class Promise3 {
+    constructor(fun){
+        this.value = undefined
+        this.reason = undefined
+        this.state = 'pending'
+        this.resCallback = []
+        this.rejCallback = []
+        try {
+            fun(this.resolve.bind(this),this.reject.bind(this))
+        } catch (error) {
+            this.reject(error)
+        }
+    }
+    resolve(value){
+        setTimeout(()=>{
+            if(this.state === 'pending'){
+                this.state = 'fulfilled'
+                this.value = value
+                this.resCallback.forEach(callback=>{
+                    callback(value)
+                })
+            }
+        })
+        
+    }
+    reject(reason){
+        setTimeout(()=>{
+            if(this.state === 'pending'){
+                this.state  = 'rejected'
+                this.reason = reason
+                this.rejCallback.forEach(callback=>{
+                    callback(reason)
+                })
+            }
+        })
+
+    }
+    then(onFulfilled,onRejected){
+      return new Promise3((resolve,reject)=>{
+        onFulfilled = typeof onFulfilled === 'function'?onFulfilled:()=>{}
+        onRejected = typeof onRejected === 'function'?onRejected:()=>{}
+        if(this.state === 'pending'){
+            this.resCallback.push(onFulfilled)
+            this.rejCallback.push(onRejected)
+        }
+        if(this.state == 'fulfilled'){
+            setTimeout(()=>{
+                onFulfilled(this.value)
+            })
+        }
+        if(this.state === 'rejected'){
+            setTimeout(()=>{
+                onRejected(this.reason)
+            })
+        }
+      })
+    }
+}
