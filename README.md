@@ -22,3 +22,6 @@ a(1, 1, 1);
 // 在非严格模式下，形参和arguments绑定了
 
 ```
+
+### this ,call,apply,bind
+ https://wangdoc.com/javascript/oop/this.html#%E9%81%BF%E5%85%8D%E5%A4%9A%E5%B1%82-this
