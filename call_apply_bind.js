@@ -62,3 +62,4 @@ Function.prototype.newBind = function(obj){
 
 var bibi = person.newBind(o,'a','b','c')
 var b = new bibi('kaola')   // 使用了new.实例（新对象）会绑定到函数调用的this上。new绑定的规则
+
