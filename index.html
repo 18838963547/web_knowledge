@@ -5,14 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    
+    <style>
+        body{
+            position: relative;
+            overflow: hidden;
+        }
+        .block{
+            position: absolute;
+            width: 80px;
+            animation: identifier 5s linear 0s alternate;
+        }
+        @keyframes identifier {
+            from{
+                left: 100%;
+                transform: translateX(0);
+            }
+            to{
+                left: 0;
+                transform: translateX(-100%);
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="demo">0</div>
+    <!-- <div id="demo">0</div>
     <button id="start">start</button>
     <button id="end">end</button>
-    <button id="reset">reset</button>
-    <p>测试数据</p>
+    <button id="reset">reset</button> -->
+    <div class="block">弹幕数据</div>
     <script src="./jsH.js"></script>
     <!-- <script src="./promise.js"></script> -->
     <!-- <script src="./call_apply_bind.js"></script> -->
