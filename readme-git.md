@@ -8,18 +8,18 @@
             压缩以后会在目录中生成gz文件，生成gz文件后。在nginx中设置了gzip_static_on后，会加载相应的文件压缩文件，如果找不到，就加载未压缩过的。
         b:浏览器请求js文件的时候，服务器进行压缩
             nginx举例: 
-            ![nginx图](/img/1.png）
+            ![nginx图](./知识汇总/img/1.png）
             gzip的配置，首先是开启gzip，设置缓冲区大小，压缩的等级，需要压缩的文件
     1.3 使用CDN引入资源
     1.4 配置webpack的external，不打包第三方库
     1.5 配置 DllPlugin 和 DllReferencePlugin 将引用的依赖提取 -- https://segmentfault.com/a/1190000016567986
 
 2. 什么是 CSP? 
-> 内容安全策略（CSP）
-> CSP 本质上就是建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规则，如何拦截是由浏览器自己实现的。我们可以通过这种方式来尽量减少 XSS 攻击。
-> 两种方式开启内容安全策略：
-> 1.1 一种是设置 HTTP 首部中的 Content-Security-Policy;
-> 1.2 一种是设置 meta 标签的方式 <meta http-equiv="Content-Security-Policy">
+    > 内容安全策略（CSP）
+    > CSP 本质上就是建立白名单，开发者明确告诉浏览器哪些外部资源可以加载和执行。我们只需要配置规    则，如何拦截是由浏览器自己实现的。我们可以通过这种方式来尽量减少 XSS 攻击。
+    > 两种方式开启内容安全策略：
+    > 1.1 一种是设置 HTTP 首部中的 Content-Security-Policy;
+    > 1.2 一种是设置 meta 标签的方式 <meta http-equiv="Content-Security-Policy">
 
 3. 说一下 Vue 中 EventBus（事件总线） 的使用？在使用过程中有没有遇到重复触发的问题？如何解决的？
 https://github.com/lgwebdream/FE-Interview/issues/1195
@@ -75,8 +75,92 @@ URI: 统一资源标识符
 16. 说下 LRU 算法的原理并手写实现？一般有哪些优化方式？（最近最少使用）
 
 17. js中的运算符逗号，
-> ,逗号表示 代码全部执行，但是只返回最后一个逗号后面的运算表达式的结果
+    > ,逗号表示 代码全部执行，但是只返回最后一个逗号后面的运算表达式的结果
 
 18. Map 数据类型
 理解：set每次往后面添加一个，然后利用keys().next()可以取到第一个值（理解为最早插入的值）
 
+19. 如果有一个项目，随着业务的增长越来越大，怎么办，如何来进行一个拆分或者处理
+    **工程化**
+    首先说下前端工程化的目的：进行高效的多人协作、保证项目的可维护性、提高项目的开发质量、降低项目生产的风险等
+    前端工程化是使用软件工程的技术和方法来进行前端的 开发流程、技术、工具、经验等规范化、标准化，其主 要目的为了提高效率和降低成本，即提高开发过程中的开发效率，减少不必要的重复工作时间，而前端工程本 质上是软件工程的一种，因此我们应该从软件工程的角 度来研究前端工程。
+    前端工程化就是为了让前端开发能够“自成体系”，个人认为主要应该从模块化、组件化、规范化、动化四个方面思考。
+    1. **模块化**
+      包括JS的模块化，CSS的模块化，资源的模块化
+      简单来说，模块化就是将一个大文件拆分成相互依赖的小文件，在进行统一的拼装和加载
+    2. **组件化**
+      从UI拆分下来的每个包含模板（HTML）+样式（css）+逻辑（js）功能完备的结构单元，我们称之为组件。
+      需要注意的是组件化≠模块化。模块化指示在文件层面上，对代码或资源的拆分，而组件化是在设计层面上对UI（用户界面）的拆分。
+      组件化实际上是一种按照模板（HTML）+样式（css）+逻辑（js）三位一体的形式对面向对象的进一步抽象。
+      所以我们处了封装组件本身，还要合理处理组件之间的关系，比如（逻辑）继承、（样式）扩展、（模板）嵌套和包含等，这些关系都可以归为依赖。
+    3. **规范化**
+      目录结构的制定、编码规范、前后端接口规范、文档规范、组件管理、git分支管理、commit描述规范、视觉图标规范
+    4. **自动化**
+      前端工程化的很多脏活累活都应该交给自动化工具来完成。需要秉持的一个理念是:任何简单机械的重复劳动都 应该让机器去完成。图标合并、持续继承、自动化构建、自动化部署、自动 化测试。
+
+20. 怎么理解 to B 和 to C 的业务
+![answer](./assets/img/20211028221056.jpg)
+
+21. 简单封装一个异步 fecth，使用 async await 的方式来使用
+![answer](./assets/img/1.jpg)
+    ```
+    let searchWord = '123',
+        url = `https://www.baidu.com/s?wd=${searchWord}`;
+    (async ()=>{
+    try {
+        let res = await fetch(url, {mode: 'no-cors'});//等待fetch被resolve()后才能继续执行
+        console.log(res);//fetch正常返回后才执行
+        return res;//这样就能返回res不用担心异步的问题啦啦啦
+    } catch(e) {
+        console.log(e);
+    }
+    })();
+    ```
+    ```
+    class EasyHttp{
+    //get 
+    async get(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    }
+
+    //POST
+    async post(url,datas){
+        const response = await fetch(url,{
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(datas)            
+        })
+        const data = await response.json();
+        return data;
+    }
+
+    //PUT
+    async put(url,datas){
+        const response = await fetch(url,{
+            method: "PUT",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(datas)            
+        })
+        const data = await response.json();
+        return data;
+    }
+
+    //delete
+    async delete(url){
+        const response = await fetch(url,{
+            method: "DELETE",
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await "数据删除成功";   //await后面还可以直接跟字符串额 这操作666...
+        return data;
+    }
+}
+    ```

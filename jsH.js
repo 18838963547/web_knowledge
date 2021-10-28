@@ -1,22 +1,22 @@
-function forobj(obj) {
-    if (typeof obj !== 'object') {
-        console.log(obj)
-        return obj
+function deal() {
+    const cards = [];
+    for(let i = 0; i < 52; i++) {
+      cards.push(i);
     }
-    for (const key in obj) {
-        var element = obj[key]
-        forobj(element)
+    var i = 53
+    while(i){
+        let j = Math.floor(Math.random()*i--)
+        console.log(cards[j])
+        [cards[j],cards[i]] = [cards[i],cards[j]]
     }
-}
-var obj = {
-    a: 1,
-    b: 2,
-    c: {
-        d: 3,
-        r: {
-            e: 5
-        }
-    }
-}
+    // cards.sort((a, b) => (Math.ceil(Math.random() * 52) - 1) - b);
+    return [cards.slice(0, 13), cards.slice(13, 26), cards.slice(26, 39), cards.slice(39, 52)];
+  }
+  console.log(deal());
 
-forobj(obj)
+// var numbers = [4, 2, 5, 1, 3];
+// numbers.sort(function(a, b) {
+//     console.log(a,b);
+//     debugger;
+//   return a - b;
+// });
