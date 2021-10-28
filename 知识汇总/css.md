@@ -38,3 +38,82 @@ css预处理器
 css预处理器带来的好处
 >css代码更加整洁， 更易维护，代码量更少 修改更快， 基础颜色使用变量， 一处动，处处动。 常用的代码使用代码块， 节省大量代码
 >css嵌套减少大量的重复选择器，避免一些低级错误 变量混入大大提升了样式的利用性 额外的工具类似颜色函数（lighten,darken,transparentize）mixins, loops,这些方法使css更像一个真正的编程语言，让开发者能够有能力生成更加复杂的css样式。
+### css水滴效果代码
+```
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @keyframes identifier {
+            0% {
+                transform: scale(0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .content {
+            position: relative;
+            top: 10%;
+            left: 10%;
+            width: 500px;
+            height: 500px;
+            border: 1px yellow solid;
+        }
+        
+        .water1,
+        .water2,
+        .water3,
+        .water4 {
+            position: absolute;
+            padding: 20%;
+            left: 30%;
+            top: 30%;
+            border: 1px violet solid;
+            box-shadow: 0 0 120px 30px violet inset;
+            border-radius: 100%;
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        .water1 {
+            animation: identifier 12s 9s ease-out infinite;
+        }
+        
+        .water2 {
+            animation: identifier 12s 6s ease-out infinite;
+        }
+        
+        .water3 {
+            animation: identifier 12s 3s ease-out infinite;
+        }
+        
+        .water4 {
+            animation: identifier 12s 0s ease-out infinite;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="content">
+        <div class="water1"></div>
+        <div class="water2"></div>
+        <div class="water3"></div>
+        <div class="water4"></div>
+    </div>
+    <script src="./jsH.js"></script>
+    <!-- <script src="./promise.js"></script> -->
+    <!-- <script src="./call_apply_bind.js"></script> -->
+</body>
+
+</html>
+```
