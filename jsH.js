@@ -1,22 +1,23 @@
-function deal() {
-    const cards = [];
-    for(let i = 0; i < 52; i++) {
-      cards.push(i);
+function getMonth(startMonth,endMonth){
+    var result = []
+    // 转为时间戳
+    let sm = getDate(startMonth,1).getTime()
+    const em = getDate(endMonth).getTime()
+    while(sm<em){
+        var curTime = new Date(sm)
+        result.push(formatDate(curTime))
+        curTime.setMonth(curTime.getMonth()+1)
+        sm = curTime.getTime()
     }
-    var i = 53
-    while(i){
-        let j = Math.floor(Math.random()*i--)
-        console.log(cards[j])
-        [cards[j],cards[i]] = [cards[i],cards[j]]
-    }
-    // cards.sort((a, b) => (Math.ceil(Math.random() * 52) - 1) - b);
-    return [cards.slice(0, 13), cards.slice(13, 26), cards.slice(26, 39), cards.slice(39, 52)];
-  }
-  console.log(deal());
+    return result
+}
 
-// var numbers = [4, 2, 5, 1, 3];
-// numbers.sort(function(a, b) {
-//     console.log(a,b);
-//     debugger;
-//   return a - b;
-// });
+function getDate(date,addMonth=0){
+   var [year,month] = date.split('-')
+   return new Date(year,month-1+addMonth)
+}
+function formatDate(date){
+   return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,0)}`
+}
+
+console.log(getMonth("2018-08", "2018-12"));

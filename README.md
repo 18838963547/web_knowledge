@@ -192,3 +192,29 @@ URI: 统一资源标识符
     }
 }
     ```
+
+22. 给定起止日期，返回中间的所有月份
+    ```
+    function getMonth(startMonth,endMonth){
+        var result = []
+        // 转为时间戳
+        let sm = getDate(startMonth,1).getTime()
+        const em = getDate(endMonth).getTime()
+        while(sm<em){
+            var curTime = new Date(sm)
+            result.push(formatDate(curTime))
+            curTime.setMonth(curTime.getMonth()+1)
+            sm = curTime.getTime()
+        }
+        return result
+    }
+
+    function getDate(date,addMonth){
+    var [year,month] = date.split('-')
+    return new Date(year,month-1+addMonth)
+    }
+    function formatDate(date){
+    return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,0)}`
+    }
+    ```
+
