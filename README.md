@@ -390,3 +390,9 @@ car4.inPark(park)
 
 console.log(park.parkSites)
 ```
+
+30. 面向对象
+面向对象三大特性  封装 继承 多态
+
+31. 什么是http协议无状态？怎么解决http协议无状态？
+https://blog.csdn.net/songxiao1124/article/details/120119388
