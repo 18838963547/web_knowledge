@@ -395,4 +395,8 @@ console.log(park.parkSites)
 面向对象三大特性  封装 继承 多态
 
 31. 什么是http协议无状态？怎么解决http协议无状态？
-https://blog.csdn.net/songxiao1124/article/details/120119388
+    > 协议无状态：http的请求是独立的，他可以自己独自完成一次链接操作，而不需要其他相关的辅助。
+    > cookie session Token JWT
+    https://blog.csdn.net/songxiao1124/article/details/120119388
+
+32. 
