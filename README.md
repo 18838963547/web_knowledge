@@ -300,3 +300,182 @@ MyEvent = {
   },
 };
 ```
+24. 什么是 CORS，CORS 需要前端配置还是后端配置
+发送ajax的时候跨域使用的，前端不用配置，如果需要携带cookie信息时，需要将withCredentials设置为true即可
+https://blog.csdn.net/qq_24510455/article/details/101014917
+
+25. 什么是同源策略？什么是跨域？都有哪些方式会造成跨域？解决跨域都有什么手段？
+ > jsonp（只能发get请求）
+ 创建script标签，设置其属性，在URL上传入回调函数，加载后立即执行回调函数，回调函数中的值，就是返回的数据。作为参数的JSON数据被视为js对象，不需要使用json.parse()转化
+ webSocket
+ 由服务器决定，发送的请求中由origin代表了当前的源，如果服务器看到他在白名单中，就会返回数据。
+ CORS跨域资源共享
+ 支持ajax请求，后端配置即可
+
+26. 浏览器渲染流程、重绘、重排
+  ![img](./assets/img/3.jpeg)
+
+  1 解析html生成dom树
+  2 解析css生成cssOM
+  3 dom和cssOM合成形成 渲染树
+  4 渲染树生成合成树
+  5 渲染主线程，生成绘制指令列表提交给合成线程
+  6 合成线程利用栅格化生成位图，此时会利用GPU进程进行加速
+  7 提交给主线程进行页面展示
+
+27. 浏览器都有哪些进程，渲染进程中都有什么线程
+ ![answer](./assets/img/4.jpeg)
+
+28. flex弹性布局
+  ```
+  display:flex;
+  flex-direction: row | cloumn 规定在主轴上的排列方向
+  flex-wrap: nowrap |wrap   规定排列的时候是否换行
+  flex-flow: 以上两个的结合
+  justify-content: space-between(两端对齐，贴边) | space-around（均分对齐，两端不贴边）
+
+  align-items: 规定了在交叉轴上的对齐方式
+  align-content: 规定了多条轴线对齐的方式，如果只有一条，则不生效
+  ```
+
+29. 设计一个停车场系统
+```
+// 停车场类
+class ParkingLot{
+    constructor(n) {
+        // 停车位
+        this.parkSites = []
+        // 剩余停车位个数
+        this.leftSites = n
+        this.board = new DisplayBoard()
+        // 初始化停车位
+        for (let i = 1; i <= n; i++) {
+            this.parkSites.push(new ParkingSpace(i))
+        }
+        console.log('停车场初始化完毕')
+        this.showLeftSites()
+    }
+
+    // 进停车场停车
+    inPark(car) {
+        if (this.leftSites === 0) {
+            console.log('停车位已满')
+            return
+        }
+        if (car.site) {
+            console.log(car.carId + '车辆已经在停车场了')
+            return
+        }
+        let len = this.parkSites.length
+        for (let i = 0; i < len; i++) {
+            const site = this.parkSites[i]
+            // 如果停车位是空的
+            if(site.car === null) {
+                site.car = car
+                car.site = site
+                this.leftSites--
+                console.log(car.carId + '车辆停入' + site.id + '号停车位')
+                this.showLeftSites()
+                return
+            }
+        }
+    }
+
+    // 出停车场
+    outPark (car) {
+        if (car.site === null) {
+            console.log(car.carId + '本来就没在停车场')
+            return;
+        }
+        let len = this.parkSites.length
+        for (let i = 0; i < len; i++) {
+            const site = this.parkSites[i]
+            // 如果停车位是空的
+            if(site.car.carId === car.carId) {
+                site.car = null
+                car.site = null
+                this.leftSites++
+                console.log(car.carId + '车辆已从' + site.id + '号停车位，出停车场')
+                this.showLeftSites()
+                return
+            }
+        }
+    }
+
+    // 显示剩余的停车位数量
+    showLeftSites() {
+        this.board.showLeftSapce(this.leftSites)
+    }
+
+}
+
+
+// 停车位
+class ParkingSpace {
+    constructor(id) {
+        // 停车位编号
+        this.id = id
+        // 停入的车辆
+        this.car = null
+    }
+}
+
+// 车 类
+class Car{
+    constructor(carId) {
+        // 车牌号
+        this.carId = carId
+        // 停入的车位
+        this.site = null
+    }
+    // 进入停车场
+    inPark (park) {
+        park.inPark(this)
+    }
+    outPark(park) {
+        park.outPark(this)
+    }
+}
+
+// 展示牌类
+class DisplayBoard {
+    constructor() {
+    }
+    // 展示剩余停车位
+    showLeftSapce(n) {
+        console.log (`当前剩余${n}个停车位` )
+    }
+}
+
+
+const park = new ParkingLot(3)
+
+const car1 = new Car('京A1XXX')
+const car2 = new Car('京A2XXX')
+const car3 = new Car('京A3XXX')
+const car4 = new Car('京A4XXX')
+car1.inPark(park)
+car1.inPark(park)
+car1.outPark(park)
+car1.outPark(park)
+car1.inPark(park)
+
+car2.inPark(park)
+car3.inPark(park)
+car4.inPark(park)
+
+car2.outPark(park)
+car4.inPark(park)
+
+console.log(park.parkSites)
+```
+
+30. 面向对象
+面向对象三大特性  封装 继承 多态
+
+31. 什么是http协议无状态？怎么解决http协议无状态？
+    > 协议无状态：http的请求是独立的，他可以自己独自完成一次链接操作，而不需要其他相关的辅助。
+    > cookie session Token JWT
+    https://blog.csdn.net/songxiao1124/article/details/120119388
+
+32. 
