@@ -478,4 +478,24 @@ console.log(park.parkSites)
     > cookie session Token JWT
     https://blog.csdn.net/songxiao1124/article/details/120119388
 
-32. 
+32. vue打包vendors.js体积过大怎么处理？webpack打包vue速度慢怎么办？
+  * 使用路由懒加载功能
+  * 使用CDN引入js和css 
+  * 配置webpack的externals，不打包第三方库
+  * 使用gzip压缩
+  * 使用DLLPLUGIN和DLLReferncePlugin提取依赖
+  webpack打包速度慢
+  * 先使用webpack-bundle-analyzer进行可视化分析，主要看依赖和chunks打包时间
+  * 减少依赖的层级嵌套
+  * 使用DLL处理第三方包
+  * 使用尽可能少的处理（loder,plugin)
+  * 多线程打包（HappyPack）
+  * 关闭sourceMap(就是映射打包后的错误在真是代码中的位置)  https://www.jianshu.com/p/f20d4ceb8827
+  * 优化resolve.extensions 配置  （这个就是优化引用其他文件时可以不添加后缀，在这个文件中配置好了后缀，就会依次查找）https://www.jianshu.com/p/68cd9f5d2094
+  * 优化resolve.alias 配置 （配置一些路径简写，例如@path  然后在也页面中引用的时候就不用写那么复杂了）
+  * 优化resolve.modules配置 （就是定义目录的查找顺序，查找import包的时候，先从定义的数组中第一个开始找，依次往下找）
+  * 使用include和exclude (include包含要被处理的loader，exculde排除不需要被loader的文件）  https://juejin.cn/post/6844904166180159495 
+
+33. Vue3可以有多个根节点
+  vue3可以有多个根节点的时候，要设置传过来的$attr应该绑定到谁的身上。
+  如果只有一个根节点，就默认绑定到相应的根节点，如果不想绑定到根节点，要设置inheritAttrs: false
