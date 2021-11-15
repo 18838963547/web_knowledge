@@ -399,4 +399,13 @@ console.log(park.parkSites)
     > cookie session Token JWT
     https://blog.csdn.net/songxiao1124/article/details/120119388
 
-32. 
+32. es5的继承 和 es6的继承的区别。就是构造函数和class类的区别
+    1. class不能当作函数使用，必须使用new创建。构造函数就可以直接使用，也可以用new创建
+    2. 构造函数的实例属性和实例方法可以被枚举，而class的不可以被枚举，获取对象不可枚举的属性可以使用object.getOwnPerototype()
+    3. es5中的子类通过隐式原型找到父类的原型，es6中子类的原型直接指向了父类。
+    ```
+        sub.__proto__ === Function.prototype
+        sub.__proto__ === Sup
+    ```
+    4. es5的继承，实质上是先创建子类的实例this,然后执行父类的构造函数为this添加实例属性和方法。es6的继承，实质上是父类先创建实例this,再用子类的构造函数修改this。
+    5. 定义的顺序，class不存在变量提升，要先定义父类，再定义子类才可以。
