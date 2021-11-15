@@ -221,6 +221,85 @@ URI: 统一资源标识符
 23. 平时在项目开发中都做过哪些前端性能优化
 ![优化](./assets/img/2.jpg)
 
+24. 写一个通用的事件侦听器函数
+```
+MyEvent = {
+  // 页面加载完成后
+  readyEvent: function (fn) {
+    if (fn == null) {
+      fn = document;
+    }
+    var oldOnload = window.onload;
+    if (typeof window.onload != "function") {
+      window.onload = fn;
+    } else {
+      window.onload = function () {
+        oldOnload();
+        fn();
+      };
+    }
+  },
+  // 视能力分别使用dom0||dom2||IE方式 来绑定事件
+  // 参数： 操作的元素,事件名称 ,事件处理程序
+  addEvent: function (element, type, handler) {
+    if (element.addEventListener) {
+      //事件类型、需要执行的函数、是否捕捉
+      element.addEventListener(type, handler, false);
+    } else if (element.attachEvent) {
+      element.attachEvent("on" + type, function () {
+        handler.call(element);
+      });
+    } else {
+      element["on" + type] = handler;
+    }
+  },
+  // 移除事件
+  removeEvent: function (element, type, handler) {
+    if (element.removeEventListener) {
+      element.removeEventListener(type, handler, false);
+    } else if (element.datachEvent) {
+      element.detachEvent("on" + type, handler);
+    } else {
+      element["on" + type] = null;
+    }
+  },
+  // 阻止事件 (主要是事件冒泡，因为IE不支持事件捕获)
+  stopPropagation: function (ev) {
+    if (ev.stopPropagation) {
+      ev.stopPropagation();
+    } else {
+      ev.cancelBubble = true;
+    }
+  },
+  // 取消事件的默认行为
+  preventDefault: function (event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+  },
+  // 获取事件目标
+  getTarget: function (event) {
+    return event.target || event.srcElement;
+  },
+  // 获取event对象的引用，取到事件的所有信息，确保随时能使用event；
+  getEvent: function (e) {
+    var ev = e || window.event;
+    if (!ev) {
+      var c = this.getEvent.caller;
+      while (c) {
+        ev = c.arguments[0];
+        if (ev && Event == ev.constructor) {
+          break;
+        }
+        c = c.caller;
+      }
+    }
+    return ev;
+  },
+};
+```
 24. 什么是 CORS，CORS 需要前端配置还是后端配置
 发送ajax的时候跨域使用的，前端不用配置，如果需要携带cookie信息时，需要将withCredentials设置为true即可
 https://blog.csdn.net/qq_24510455/article/details/101014917
@@ -409,3 +488,25 @@ console.log(park.parkSites)
     ```
     4. es5的继承，实质上是先创建子类的实例this,然后执行父类的构造函数为this添加实例属性和方法。es6的继承，实质上是父类先创建实例this,再用子类的构造函数修改this。
     5. 定义的顺序，class不存在变量提升，要先定义父类，再定义子类才可以。
+
+33. vue打包vendors.js体积过大怎么处理？webpack打包vue速度慢怎么办？
+  * 使用路由懒加载功能
+  * 使用CDN引入js和css 
+  * 配置webpack的externals，不打包第三方库
+  * 使用gzip压缩
+  * 使用DLLPLUGIN和DLLReferncePlugin提取依赖
+  webpack打包速度慢
+  * 先使用webpack-bundle-analyzer进行可视化分析，主要看依赖和chunks打包时间
+  * 减少依赖的层级嵌套
+  * 使用DLL处理第三方包
+  * 使用尽可能少的处理（loder,plugin)
+  * 多线程打包（HappyPack）
+  * 关闭sourceMap(就是映射打包后的错误在真是代码中的位置)  https://www.jianshu.com/p/f20d4ceb8827
+  * 优化resolve.extensions 配置  （这个就是优化引用其他文件时可以不添加后缀，在这个文件中配置好了后缀，就会依次查找）https://www.jianshu.com/p/68cd9f5d2094
+  * 优化resolve.alias 配置 （配置一些路径简写，例如@path  然后在也页面中引用的时候就不用写那么复杂了）
+  * 优化resolve.modules配置 （就是定义目录的查找顺序，查找import包的时候，先从定义的数组中第一个开始找，依次往下找）
+  * 使用include和exclude (include包含要被处理的loader，exculde排除不需要被loader的文件）  https://juejin.cn/post/6844904166180159495 
+
+33. Vue3可以有多个根节点
+  vue3可以有多个根节点的时候，要设置传过来的$attr应该绑定到谁的身上。
+  如果只有一个根节点，就默认绑定到相应的根节点，如果不想绑定到根节点，要设置inheritAttrs: false
