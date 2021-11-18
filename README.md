@@ -510,3 +510,7 @@ console.log(park.parkSites)
 33. Vue3可以有多个根节点
   vue3可以有多个根节点的时候，要设置传过来的$attr应该绑定到谁的身上。
   如果只有一个根节点，就默认绑定到相应的根节点，如果不想绑定到根节点，要设置inheritAttrs: false
+
+
+34. nuxt
+git@github.com:ChanWahFung/nuxt-juejin-project.git
