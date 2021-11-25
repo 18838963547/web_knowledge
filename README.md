@@ -541,3 +541,6 @@ console.log(park.parkSites)
 3. 构建渲染树
 4. 布局Layout
 5. 绘制
+
+38. 节流防抖
+防抖函数
