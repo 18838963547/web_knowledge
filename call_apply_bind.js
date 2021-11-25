@@ -34,7 +34,7 @@ Function.prototype.newApply = function(obj, arr) {
 
 
 Function.prototype.newBind = function(obj) {
-        var that = this
+        var that = this // 当前的that指向的是调用这个方法的函数对象
         var arr1 = Array.prototype.slice.call(arguments, 1)
         var ob = function() {}
         newFun = function() {
