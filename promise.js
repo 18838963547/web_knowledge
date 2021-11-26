@@ -183,7 +183,6 @@ class Promise3 {
                 })
             }
         })
-
     }
     then(onFulfilled, onRejected) {
         return new Promise3((resolve, reject) => {
