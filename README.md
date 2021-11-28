@@ -512,6 +512,8 @@ console.log(park.parkSites)
   如果只有一个根节点，就默认绑定到相应的根节点，如果不想绑定到根节点，要设置inheritAttrs: false
 
 
+34. nuxt
+git@github.com:ChanWahFung/nuxt-juejin-project.git
 34. Nuxt.js
   深奥的技术栈文章：http://www.zyiz.net/tech/detail-131168.html
   Nuxt开发要点
