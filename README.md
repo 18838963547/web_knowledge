@@ -498,25 +498,25 @@ git@github.com:ChanWahFung/nuxt-juejin-project.git
 
 
 35. Symbol
-  1. 作为属性名的时候，不能被for in 和keys遍历
-  2. 使用symbol代替常量（这样定义的常量就是唯一的，不用担心重复）
-  3. 定义类的私有属性和方法
+    1. 作为属性名的时候，不能被for in 和keys遍历
+    2. 使用symbol代替常量（这样定义的常量就是唯一的，不用担心重复）
+    3. 定义类的私有属性和方法
 
 36. CSP内容安全策略
-  1. 防止跨站脚本攻击
-  2. 防止数据注入
-  开启安全策略：
-  1. 在HTTP的首部添加Content-Security-Policy
-  2. 在mate标签里面添加<meta http-equiv="Content-security-Policy">
-  csp会在服务端返回的时候定义它的安全策略，只有符合安全策略的才会被加载。如果不符合，设置了错误报告，发生错误的话，会将错误发送到服务端
+    1. 防止跨站脚本攻击
+    2. 防止数据注入
+    开启安全策略：
+    1. 在HTTP的首部添加Content-Security-Policy
+    2. 在mate标签里面添加<meta http-equiv="Content-security-Policy">
+    csp会在服务端返回的时候定义它的安全策略，只有符合安全策略的才会被加载。如果不符合，设置了错误报告，发生错误的话，会将错误发送到服务端
 
 37. vnode的原理  https://juejin.cn/post/6844903895467032589#heading-14
 浏览器引擎工作步骤：
-1. 构建dom树.
-2. 构建style Rules
-3. 构建渲染树
-4. 布局Layout
-5. 绘制
+    1. 构建dom树.
+    2. 构建style Rules
+    3. 构建渲染树
+    4. 布局Layout
+    5. 绘制
 
 38. 节流防抖
 防抖函数
