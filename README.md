@@ -40,7 +40,7 @@ a(1, 1, 1);
             gzip的配置，首先是开启gzip，设置缓冲区大小，压缩的等级，需要压缩的文件
     1.3 使用CDN引入资源
     1.4 配置webpack的external，不打包第三方库
-    1.5 配置 DllPlugin 和 DllReferencePlugin 将引用的依赖提取 -- https://segmentfault.com/a/1190000016567986
+    1.5 配置 DllPlugin 和 DllReferencePlugin 将引用的依赖提取 -- https://segmentfault.com/a/1190000016567986   第三方包打包出来引入,避免再次打包
 
 2. 什么是 CSP? 
     > 内容安全策略（CSP）
@@ -550,3 +550,4 @@ git@github.com:ChanWahFung/nuxt-juejin-project.git
 39. vue编译原理
     1. 编译入口 compileToFunction 函数
     2. compileToFuncion 方法从createCompiler中结构出来
+
