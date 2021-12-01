@@ -1,30 +1,4 @@
-## 不要停下
-## git怎么提交单个文件夹和拉取单个文件
-> git fetch 
-> git checkout -m 版本号 文件名 
 
-
-### 考察严格模式和非严格模式下的形参区别
-来自 https://github.com/lgwebdream/FE-Interview/issues/38
-```
-function side(arr) {
-  arr[0] = arr[2];
-}
-function a(a, b, c = 3) {
-  c = 10;
-  side(arguments);
-  return a + b + c;
-}
-a(1, 1, 1);
-// 写出执行结果，并解释原因
-
-// 在严格模式下（给形参赋值后就变成严格模式了），形参和arguments没有绑定关系
-// 在非严格模式下，形参和arguments绑定了
-
-```
-
-### this ,call,apply,bind
- https://wangdoc.com/javascript/oop/this.html#%E9%81%BF%E5%85%8D%E5%A4%9A%E5%B1%82-this
 
 1. 如何解决 Vue 打包 vendor 过大的问题？Webpack 打包 vue 速度慢怎么办？
     1.1 vue-router 懒加载
@@ -524,25 +498,25 @@ git@github.com:ChanWahFung/nuxt-juejin-project.git
 
 
 35. Symbol
-  1. 作为属性名的时候，不能被for in 和keys遍历
-  2. 使用symbol代替常量（这样定义的常量就是唯一的，不用担心重复）
-  3. 定义类的私有属性和方法
+    1. 作为属性名的时候，不能被for in 和keys遍历
+    2. 使用symbol代替常量（这样定义的常量就是唯一的，不用担心重复）
+    3. 定义类的私有属性和方法
 
 36. CSP内容安全策略
-  1. 防止跨站脚本攻击
-  2. 防止数据注入
-  开启安全策略：
-  1. 在HTTP的首部添加Content-Security-Policy
-  2. 在mate标签里面添加<meta http-equiv="Content-security-Policy">
-  csp会在服务端返回的时候定义它的安全策略，只有符合安全策略的才会被加载。如果不符合，设置了错误报告，发生错误的话，会将错误发送到服务端
+    1. 防止跨站脚本攻击
+    2. 防止数据注入
+    开启安全策略：
+    1. 在HTTP的首部添加Content-Security-Policy
+    2. 在mate标签里面添加<meta http-equiv="Content-security-Policy">
+    csp会在服务端返回的时候定义它的安全策略，只有符合安全策略的才会被加载。如果不符合，设置了错误报告，发生错误的话，会将错误发送到服务端
 
 37. vnode的原理  https://juejin.cn/post/6844903895467032589#heading-14
 浏览器引擎工作步骤：
-1. 构建dom树.
-2. 构建style Rules
-3. 构建渲染树
-4. 布局Layout
-5. 绘制
+    1. 构建dom树.
+    2. 构建style Rules
+    3. 构建渲染树
+    4. 布局Layout
+    5. 绘制
 
 38. 节流防抖
 防抖函数
@@ -551,3 +525,61 @@ git@github.com:ChanWahFung/nuxt-juejin-project.git
     1. 编译入口 compileToFunction 函数
     2. compileToFuncion 方法从createCompiler中结构出来
 
+
+40. git怎么提交单个文件夹和拉取单个文件
+> git fetch 
+> git checkout -m 版本号 文件名 
+
+
+41. 考察严格模式和非严格模式下的形参区别
+来自 https://github.com/lgwebdream/FE-Interview/issues/38
+```
+function side(arr) {
+  arr[0] = arr[2];
+}
+function a(a, b, c = 3) {
+  c = 10;
+  side(arguments);
+  return a + b + c;
+}
+a(1, 1, 1);
+// 写出执行结果，并解释原因
+
+// 在严格模式下（给形参赋值后就变成严格模式了），形参和arguments没有绑定关系
+// 在非严格模式下，形参和arguments绑定了
+
+```
+
+42. nginx
+    * 反向代理
+        反向代理功能，为http请求提供了跨域的支持。可以通过配置nginx.config中的serve来执行跨域的域名。
+    * 负载均衡
+        负载均衡的使用有三种方式去使用。轮询，加权轮询，ip_hash
+        * 轮询： 每个服务器的权重都是1，轮流访问
+        * 加权轮询： 服务器的权重不一样，根据权重分发请求
+        * ip_hash： 将来自相同的ip的请求分发到同一个服务器上，解决session的问题。
+    
+    * 动静分离（前两个是主要点，这个关注点）
+        * 将多次访问的不经常改变的资源定为静态资源，例如html，css等
+        * 将经常会改变的数据，定为动态资源。
+    根据动静态资源的不同，服务端采用不同的服务器来进行解析。静态资源可以走本地的nagix服务器。动态资源可以使用反向代理加载。
+
+43. 几种网络安全问题
+    * 跨站请求攻击（XSS）
+        原理：页面渲染的数据中包含可运行的脚本
+        攻击的基本类型：反射型（ url参数中直接注入）和存储型（存储到DB后读取注入）
+        注入方法：
+        1. 在节点中注入 
+            ```
+            <div><script>alert('1')</script></div> 
+            ```
+        2. 在标签中注入
+            ```
+            <img src='./index.js'>
+            ```
+        3. 在js中注入 直接在到script标签里面
+        4. 在富文本中注入
+
+        
+    * 跨站请求伪造 (CSRF)
+    * 点击劫持
