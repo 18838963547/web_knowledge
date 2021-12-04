@@ -148,8 +148,19 @@
 
 
 ### lx 1
-1. 为什么用node搭建服务，node搭建服务的好处
+1. 为什么用node搭建服务，node搭建服务的好处 (Node.js适合运用在高并发、I/O密集、少量业务逻辑的场景)
+ * 事件驱动  (事件循环机制)
+ * 非阻塞式I/O
+
 2. loader和plugin 的原理
+    https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/308
+ * loader: 充当一个转换的角色,将文件进行转化
+    原理: loader转换的三个步骤
+    1. 编译 parse()
+    2. 优化 optimize
+    3. 生成 genernate
+ * plugin : 充 当的是一个扩展的功能,为webpack提供更多的扩展功能
+
 3. nextTick的运行机制 和原理
 4. 做统一化的组件，适用于手机端和pc端（既然底层逻辑一样，做两套岂不是耗费更多的人力）
 5. 文档更新机制，减轻人力
@@ -157,3 +168,9 @@
 7. 为什么用npm包，不直接用一个页面呢
 8. http2为什么用 多路复用，有什么好处？解决了什么问题
 9. 安全问题，xss跨站脚本攻击 怎么防止数据注入
+    csrf 跨站请求伪造
+
+### lx 2
+1. map结构怎么实现的底层原理
+2. cdn为什么能优化,直接引入一个包不行吗
+3. 
