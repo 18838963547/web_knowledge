@@ -22,7 +22,7 @@ class promise0 {
             reject(error)
         }
     }
-    then(onFulfilled, onRejected) {
+    then (onFulfilled, onRejected) {
         if (this.state === 'fulfilled') {
             onFulfilled(this.value)
         }
@@ -33,7 +33,7 @@ class promise0 {
 
 }
 
-function Promise1(executor) {
+function Promise1 (executor) {
     var self = this
     this.state = 'pending'
     this.value = undefined
@@ -57,7 +57,7 @@ function Promise1(executor) {
         reject(error)
     }
 }
-Promise1.prototype.then = function(onFulfilled, onRejected) {
+Promise1.prototype.then = function (onFulfilled, onRejected) {
     let self = this
     if (this.state === 'fulfilled') {
         onFulfilled(this.value)
@@ -87,7 +87,7 @@ class Promise2 {
         }
 
     }
-    resolve(val) {
+    resolve (val) {
         setTimeout(() => {
             if (this.state === 'pending') {
                 this.state = 'fulfilled'
@@ -99,7 +99,7 @@ class Promise2 {
         })
 
     }
-    reject(reason) {
+    reject (reason) {
         setTimeout(() => {
             if (this.state === 'pending') {
                 this.state = 'rejected'
@@ -110,10 +110,10 @@ class Promise2 {
             }
         })
     }
-    then(onFulfilled, onRejected) {
+    then (onFulfilled, onRejected) {
         return new Promise2((resolve, reject) => {
-            onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => {};
-            onRejected = typeof onRejected === 'function' ? onRejected : () => {};
+            onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => { };
+            onRejected = typeof onRejected === 'function' ? onRejected : () => { };
             switch (this.state) {
                 case 'fulfilled':
                     setTimeout(() => {
@@ -161,7 +161,7 @@ class Promise3 {
             this.reject(error)
         }
     }
-    resolve(value) {
+    resolve (value) {
         setTimeout(() => {
             if (this.state === 'pending') {
                 this.state = 'fulfilled'
@@ -173,7 +173,7 @@ class Promise3 {
         })
 
     }
-    reject(reason) {
+    reject (reason) {
         setTimeout(() => {
             if (this.state === 'pending') {
                 this.state = 'rejected'
@@ -184,10 +184,10 @@ class Promise3 {
             }
         })
     }
-    then(onFulfilled, onRejected) {
+    then (onFulfilled, onRejected) {
         return new Promise3((resolve, reject) => {
-            onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => {}
-            onRejected = typeof onRejected === 'function' ? onRejected : () => {}
+            onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => { }
+            onRejected = typeof onRejected === 'function' ? onRejected : () => { }
             if (this.state === 'pending') {
                 this.resCallback.push(onFulfilled)
                 this.rejCallback.push(onRejected)
@@ -206,7 +206,7 @@ class Promise3 {
     }
 }
 
-function promiseAll(promiseList) {
+function promiseAll (promiseList) {
     return new Promise((resolve, reject) => {
         if (!Array.isArray(promiseList)) throw new Error('argumnetsf must be a array')
         const len = promiseList.length
@@ -227,18 +227,33 @@ function promiseAll(promiseList) {
     })
 }
 
-let p1 = new Promise(function(resolve, reject) {
-    setTimeout(function() {
+
+
+function racePromise (promiseList) {
+    var len = promiseList.length
+    return new Promise((resolve, reject) => {
+        for (var i = 0; i < len; i++) {
+            if (promiseList[i] instanceof Promise) {
+                promiseList[i].then(resolve, reject)
+            } else {
+                Promise.resolve(promiseList[i]).then(resolve, reject)
+            }
+        }
+    })
+}
+
+let p1 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
         resolve(1)
     }, 1000)
 })
-let p2 = new Promise(function(resolve, reject) {
-    setTimeout(function() {
+let p2 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
         resolve(2)
     }, 2000)
 })
-let p3 = new Promise(function(resolve, reject) {
-    setTimeout(function() {
+let p3 = new Promise(function (resolve, reject) {
+    setTimeout(function () {
         resolve(3)
     }, 3000)
 })
