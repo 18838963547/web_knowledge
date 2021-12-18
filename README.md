@@ -10,7 +10,6 @@
             压缩以后会在目录中生成gz文件，生成gz文件后。在nginx中设置了gzip_static_on后，会加载相应的文件压缩文件，如果找不到，就加载未压缩过的。
         b:浏览器请求js文件的时候，服务器进行压缩
             nginx举例: 
-            ![nginx图](./知识汇总/img/1.png）
             gzip的配置，首先是开启gzip，设置缓冲区大小，压缩的等级，需要压缩的文件
     1.3 使用CDN引入资源
     1.4 配置webpack的external，不打包第三方库
@@ -101,10 +100,8 @@ URI: 统一资源标识符
       前端工程化的很多脏活累活都应该交给自动化工具来完成。需要秉持的一个理念是:任何简单机械的重复劳动都 应该让机器去完成。图标合并、持续继承、自动化构建、自动化部署、自动 化测试。
 
 20. 怎么理解 to B 和 to C 的业务
-![answer](./assets/img/20211028221056.jpg)
 
 21. 简单封装一个异步 fecth，使用 async await 的方式来使用
-![answer](./assets/img/1.jpg)
     ```
     let searchWord = '123',
         url = `https://www.baidu.com/s?wd=${searchWord}`;
@@ -287,7 +284,6 @@ https://blog.csdn.net/qq_24510455/article/details/101014917
  支持ajax请求，后端配置即可
 
 26. 浏览器渲染流程、重绘、重排
-  ![img](./assets/img/3.jpeg)
 
   1 解析html生成dom树
   2 解析css生成cssOM
@@ -298,7 +294,6 @@ https://blog.csdn.net/qq_24510455/article/details/101014917
   7 提交给主线程进行页面展示
 
 27. 浏览器都有哪些进程，渲染进程中都有什么线程
- ![answer](./assets/img/4.jpeg)
 
 28. flex弹性布局
   ```
