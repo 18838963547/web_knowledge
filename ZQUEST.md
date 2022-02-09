@@ -173,3 +173,38 @@
 ### lx 2
 1. map结构怎么实现的底层原理
 2. cdn为什么能优化,直接引入一个包不行吗
+
+
+### 项目难点 --审批
+1. 审批流 组件的开发和功能模块的抽取。
+    1.1 将常用的三块内容抽离出，作为组件功能。功能抽取部分的设计
+    1.2 需要抽离哪些内容？如何保证内容的独立性。
+    1.3 提高可维护性
+    1.4 链式和table样式的数据保持一致。链式结构的链式数据转换为数组数据，数组数据转换为链式数据的关系。
+
+2. 对于列表的可扩展性开发
+    问题：列表嵌套层级过深，使用插槽开发需要添加过多的重复内容
+    解决方案： 通过使用注入的方式，在第一层级将当前的this注入，在使用的地方，通过inject的方式接收到传递的this。然后通过获取到传递的插槽内容，使用render函数将内容渲染到列表中。作为扩展列
+
+3. 项目的安全防御
+    xss: 通过使用第三方工具xss.js对当前要渲染的内容进行过滤，将一些不符合规范的过滤掉,也可以设置白名单等。在使用过程中，对于v-html的指令不是很友好，不能实现过滤的效果。刚开始选用的方式是通过自定义一个指令，对内容进行过滤，但是考虑到用到的地方相对来说比较多，不造成项目上的疑惑，然后选用了直接对v-html指令进行复写
+    复写方法：直接在webpack的配置中，给vue-loadera添加自定义的指令配置。vue-laoder官方文档说明可以通过compilerOptions来设置自定义指令，
+    * 我们知道了在编译前会将我们从vue-loader传入的compilerOptions.directives和baseOptions.directives进行了合并。 这样我们就能覆盖html指令
+
+    * v-html指令的运行原理  https://www.freesion.com/article/5389589953/  （区别于自定义指令）
+    在编译之后，create阶段调用了invokeCreateHooks函数，进而执行了updateDOMProps函数，在这个函数中，使用了innerHTML将指令上的value赋值给元素。这样就造成了xss攻击。
+    * 自定义指令的运行方式
+    在编译之后，同样是进入了invokesCreateHooks函数中，但是调用了updataDirectives方法，然后调用了_update函数更新指令，最终在callHooks$中调用我们自定义的指令。
+
+    * 指令的编译过程
+    1. vue单文件中的template部分的编译，是依靠vue-loader中的templateLoader.js来实现的。
+    2. vue-loader指定了一个属性compilerOptions用来对编译器进行配置。最终聚合为finalOptions传给compilerTemplate函数（改函数将模版字符串编译为渲染函数）。
+    3. compilerTemplate函数中执行actuallyCompiler函数，首先进行了选项的合并，然后执行compile函数进行编译。
+    4. 在合并的时候对指令进行合并，将我们从compilerOptions.directives传过来的和baseOptions.directives进行合并
+
+4. 虚拟列表结合boyaTable的使用。
+    1. 结合实现虚拟列表的特点，获取到当前table表格的滚动高度，根据当前的滚动高度和显示区域高度，和每行的高度，截取相关的数据，在出发滚动事件的时候，计算出开始位置和结束位置。
+    2. 通过截取当前位置的数据，将数据展示给table
+
+### nuxt.js项目难点
+1. 服务端和客户端都可以进行的请求方法asyncData中，对多个请求使用并行请求，通过使用Promise.all来实现，同时处理好响应的reject，保证不会发生请求中断。
