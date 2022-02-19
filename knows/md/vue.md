@@ -98,3 +98,15 @@ h('ul',{},[
     ]
 }
 ```
+
+
+
+### 3. slot原理 
+https://juejin.cn/post/6997966632022704135#heading-5
+https://juejin.cn/post/6975422620988604452#heading-5
+* 回顾整个挂载流程: 执行父组件的_render函数生成vNode,在创建的过程中,为响应式数据收集依赖.遇到组件时,创建组件的vNode,如果组件有子节点,则创建子节点的vNode,并将zi节点的vNode添加到componentOptions.children中,当中的子节点就是插槽中的内容.
+
+1. 父组件编译
+    父组件编译,生成编译后的代码. 类似这种的 _c('div',[]) 
+
+2. 

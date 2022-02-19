@@ -260,3 +260,72 @@ let p3 = new Promise(function (resolve, reject) {
 promiseAll([p3, p1, p2]).then(res => {
     console.log(res) // [3, 1, 2]
 })
+
+class Promise4 {
+    constructor(executor) {
+        this.state = 'pending'
+        this.value = null
+        this.reason = null
+        this.resCallback = []
+        this.rejCallback = []
+        let resolve = (val) => {
+            if (this.state == 'pending') {
+                this.state = 'resolved'
+                this.value = val
+                this.resCallback.forEach(fn => fn())
+            }
+        }
+        let reject = (reason) => {
+            if (this.state == 'pending') {
+                this.state = 'rejected'
+                this.reason = reason
+                this.rejCallback.forEach(fn => fn())
+            }
+        }
+        try {
+            executor(resolve, reject)
+        } catch (error) {
+            reject(error)
+        }
+    }
+    then (onFulfilled, onRejected) {
+        onFulfilled = typeof onFulfilled == 'function' ? onFulfilled : val => val
+        onRejected = typeof onRejected == 'function' ? onRejected : reson => { throw reson }
+        return new Promise4((resolve, reject) => {
+            if (this.state == 'resolved') {
+                setTimeout(() => {
+                    try {
+                        let x = onFulfilled(this.value)
+                        x instanceof Promise4 ? x.then(resolve, reject) : resolve(x)
+                    } catch (error) {
+                        reject(error)
+                    }
+                });
+            }
+            if (this.state == 'rejected') {
+                setTimeout(() => {
+                    try {
+                        let x = onRejected(this.reason)
+                        x instanceof Promise4 ? x.then(resolve, reject) : resolve(x)
+                    } catch (error) {
+                        reject(error)
+                    }
+                });
+            }
+            if (this.state == 'pending') {
+                this.resCallback.push(() => {
+                    setTimeout(() => {
+                        let x = onFulfilled(this.value)
+                        x instanceof Promise4 ? x.then(resolve, reject) : resolve(x)
+                    });
+                })
+                this.rejCallback.push(() => {
+                    setTimeout(() => {
+                        let x = onRejected(this.reason)
+                        x instanceof Promise4 ? x.then(resolve, reject) : resolve(x)
+                    });
+                })
+            }
+        })
+    }
+}

@@ -79,11 +79,11 @@ async function test2 () {
     console.log(result)
 }
 
-// async 原理，就是将生成器和函数和自执行器函数包装在一个函数里面
+// async 原理，就是将生成器函数和自执行器函数包装在一个函数里面
 function fn (args) {
-    return spawn(function* () { //spawn自动执行器函数
+    return function (genF) {
 
-    });
+    };
 }
 
 function spawn (genF) { // 接受生成器函数作为参数
@@ -108,6 +108,33 @@ function spawn (genF) { // 接受生成器函数作为参数
         }
         setp(function () { return gen.next(undefined); })
     })
+}
+
+// 包装生成器函数的自执行函数
+function gengerateAsync (genF) {
+    return function () {
+        const gen = genF()
+        return new Promise((resolve, reject) => {
+            function step (nextf) {
+                let next;
+                try {
+                    next = nextf()
+                } catch (error) {
+                    reject(error)
+                }
+                if (next.done) { //结束了，就return resolve
+                    return resolve(next.value)
+                }
+                Promise.resolve(next.value).then(function (value) {
+                    step(function () { return gen.next(value) })
+                }, function (e) {
+                    step(function () { return gen.throw(e) })
+                })
+            }
+            step(function () { return gen.next() })
+        })
+    }
+
 }
 
 // Generator的next接受的参数是上一个yeild语句执行返回的参数
@@ -180,4 +207,45 @@ function delegate (element, enevtType, selector, fn) {
     })
     // 返回为element绑定的事件
     return element
+}
+// 手写事件委托
+function _delegate (element, eventType, selector, fn) {
+
+}
+
+// 防抖函数
+// 首先会返回一个函数,为什么返回一个函数。因为要执行这个返回的函数，如果返回的函数不再执行了，就最后一次执行我们需要的函数
+
+function debounce (fn, wait) {
+    let timer = null
+    return function (...args) {
+        if (timer) clearTimeout(timer)
+        timer = setTimeout(() => {
+            fn.apply(this, args)
+        }, wait)
+    }
+}
+
+// 节流函数
+// 关键是如果有timer
+function throttle (fn, wait) {
+    let timer = null
+    return function (...args) {
+        if (!timer) {
+            timer = setTimeout(() => {
+                fn.apply(this, args)
+                timer = null
+            }, wait)
+        }
+    }
+}
+
+// 深拷贝
+function deepCopy (obj) {
+    if (typeof obj != 'object') return obj
+    let newObj = Array.isArray(obj) ? [] : {}
+    for (const key in obj) {
+        newObj[key] = typeof obj[key] == 'object' ? deepCopy(obj[key]) : obj[key]
+    }
+    return newObj
 }
