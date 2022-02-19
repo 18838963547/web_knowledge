@@ -117,3 +117,90 @@ css预处理器带来的好处
 
 </html>
 ```
+
+### css3新特性
+
+1. 过渡 transition
+2. 动画 naimation
+3. 变换: transform
+4. 选择器
+5. 阴影 box-shadow: 水平阴影的位置 垂直阴影的位置 模糊距离 阴影的大小 阴影的颜色 阴影开始方向（默认是从里往外，设置inset就是从外往里）;
+6. 边框图片
+7. 边框圆角
+8. 文字
+
+### css左边固定,右边自适应
+1. float浮动
+    ```
+        .left {
+            width: 200px;
+            height: 500px;
+            border: 1px solid red;
+            float: left;
+        }
+
+        .right {
+            height: 500px;
+            border: 1px solid green;
+        }
+    ```
+2.  通过定位实现
+    ```
+    .left {
+        width: 200px;
+        height: 300px;
+        border: 1px solid red;
+        position: absolute;
+    }
+
+    .right {
+        height: 300px;
+        margin-left: 202px;
+        border: 1px solid green;
+    }
+    ```
+    Q: 如果使用这种方式,boder存在的时候,并不会显示在一行上,怎么处理?
+    A: box-sizing: border-box  边框不占用宽度
+
+3. 通过计算实现
+    ```
+    .left {
+        width: 200px;
+        height: 300px;
+        /* border: 1px solid red; */
+        background: chartreuse;
+        float: left;
+    }
+
+    .right {
+        height: 300px;
+        /* margin-left: 202px; */
+        float: right;
+        background: chocolate;
+        width: calc(100% - 200px);
+        /* border: 1px solid green; */
+    }
+    ```
+    Q: 存在问题,如果使用了border,那么并不会在一行上,这种情况怎么处理?
+    A: box-sizing: border-box  边框不占用宽度
+
+4. flex布局
+    ```
+        #div {
+            width: 100%;
+            height: 500px;
+            display: flex;
+        }
+
+        .left {
+            width: 200px;
+            height: 100%;
+            border: 1px solid red;
+        }
+
+        .right {
+            height: 100%;
+            flex: 1;
+            border: 1px solid green;
+        }
+    ```

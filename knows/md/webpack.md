@@ -25,3 +25,14 @@ https://juejin.cn/post/6996188856164810789
     3. tree-shaking
     4. scope hoisting 变量作用域提升
 
+
+
+### webpack常用loader
+1. babel-loader: 将es6语法转为es5语法
+2. css相关: 执行顺序从下到上
+    * style-loader: 将css文件添加到dom文档中的内联样式标签中
+    * css-loader: 允许css文件通过require的方式引入,并返回css代码
+    * postcss-loader: 打包css样式,自动添加前缀,为css语法添加前缀
+    * less-loader: 将less语法转为css语法
+3. file-loader : 修改打包后图片的储存路径，再根据配置修改我们引用的路径，使之对应引入.返回url
+4. url-loader: 将引入的文件进行编码,超过一定大小后,使用file-laoder
