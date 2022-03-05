@@ -106,10 +106,9 @@ https://juejin.cn/post/6997966632022704135#heading-5
 https://juejin.cn/post/6975422620988604452#heading-5
 * 回顾整个挂载流程: 执行父组件的_render函数生成vNode,在创建的过程中,为响应式数据收集依赖.遇到组件时,创建组件的vNode,如果组件有子节点,则创建子节点的vNode,并将zi节点的vNode添加到componentOptions.children中,当中的子节点就是插槽中的内容.
 
-1. 父组件编译
-    父组件编译,生成编译后的代码. 类似这种的 _c('div',[]) 
 
-2. 
+
+### vue打包
 
 1. 如何解决 Vue 打包 vendor 过大的问题？Webpack 打包 vue 速度慢怎么办？
     1.1 vue-router 懒加载
@@ -125,3 +124,9 @@ https://juejin.cn/post/6975422620988604452#heading-5
     1.3 使用CDN引入资源
     1.4 配置webpack的external，不打包第三方库
     1.5 配置 DllPlugin 和 DllReferencePlugin 将引用的依赖提取 -- https://segmentfault.com/a/1190000016567986   第三方包打包出来引入,避免再次打包
+
+
+### SPA单页应用
+> spa单页就是值web在初始化的时候加载html,css,js等资源。一旦加载完成，不会因为跟用户的交互而刷新整个页面。而是通过路由的方式进行页面的跳转和用户的交互
+* 优点： 1. 用户交互友好，方便用户操作。 2. 前后端分离，便于开发
+* 缺点： 1. 首屏加载资源多，可能产生白屏现象。 2. 不利于seo的优化，因为资源都是动态加载的。

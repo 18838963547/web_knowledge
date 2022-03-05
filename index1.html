@@ -2,43 +2,44 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        #div {
-            width: 100%;
-            height: 300px;
-            /* display: flex; */
+        div {
+            height: 500px;
         }
 
         .left {
-            display: inline-table;
-            width: 200px;
-            height: 100%;
-            border: 1px solid red;
-            /* background: chartreuse; */
+            width: 100px;
+            background: lime;
             float: left;
+            /* margin-left: -100px; */
         }
 
         .right {
-            height: 100%;
-            margin-left: 202px;
+            width: 100px;
+            background: magenta;
             float: right;
-            /* background: chocolate; */
-            width: calc(100% - 200px);
-            border: 1px solid green;
+            /* margin-right: 100px; */
+        }
+
+        .middle {
+            /* width: 100%; */
+            margin-left: 100px;
+            margin-right: 100px;
+            background: orange;
         }
     </style>
 </head>
 
 <body>
-    <div id="div">
+    <div class="box">
         <div class="left"></div>
-        <div class='right'></div>
-    </div>
+        <div class="right"></div>
+        <div class="middle"></div>
 
+    </div>
 </body>
 
 </html>

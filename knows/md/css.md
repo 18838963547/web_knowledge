@@ -204,3 +204,394 @@ css预处理器带来的好处
             border: 1px solid green;
         }
     ```
+
+### div相对于网页body 的垂直居中 (body不设置position:relative)
+1. div绝对定位,使用transform
+    ```
+    .div {
+        position:abslute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%)
+    }
+    ```
+2. div设置绝对定位
+    原理: 使用top这几个值,将元素设置为流体特性的元素,使用margin:auto在垂直上进行切分.
+    ```
+    .div {
+        margin:auto;
+        position:abslute;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+    }
+
+    ```
+
+### 垂直居中
+1.  父元素设置position:relative,子元素设置abslute,使用transform
+    ```
+    .parent {
+        position:relative;
+    }
+    .son {
+        position:abslute;
+        top:50%;
+        left:50%;
+        transform:translate(-50%,-50%)
+    }
+    ```
+2.  父元素设置position:relative,子元素设置abslute,使用margin
+    ```
+        .parent {
+        position:relative;
+    }
+    .son {
+        position:abslute;
+        margin:auto;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+    }
+    ```
+
+3. 使用flex布局
+    ```
+    .parent {
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    .son {
+        width:100px;
+        height:100px;
+    }
+    ```
+
+4. 子元素是行内元素
+    父元素使用text-align:center;line-height:父元素高度
+
+5. 使用伪元素,将伪元素设置为块内元素,然后撑开高度
+    ```
+    .parent {
+        width:500px;
+        height:500px;
+        text-align:center;
+    }
+    .parent::before {
+        content:'';
+        width:0;
+        height:100%;
+        display:inline-block;
+        vertical-align:middle;
+        position:relative;
+    }
+    .son {
+        display:inline-block;
+        vertical-align:middle;
+    }
+    ```
+6. 使用calc计算
+    ```
+    .parent {
+        widht:500px;
+        height:500px;
+    }
+    .son {
+        position:relative;
+        float:left;
+        top:calc(50%-50px);
+        margin-left:calc(50%-50px);
+    }
+    ```
+
+7. 使用表格table-cell
+    ```
+    .parent {
+        display:table-cell;
+        vertical-align:middle;
+    }
+    .son {
+        margin:0 auto;
+    }
+
+### 宽度设为高度的一半
+
+1. 直接使用vw
+    ```
+    .parent {
+        width: 100vw;
+        height: 50vw;
+    }
+    ```
+2. 宽度设为高度的一半且居中
+    ```
+    .outer {
+            width: 400px;
+            height: 100%;
+            background: pink;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .inner {
+            width: 100%;
+            height: 0;
+            padding-bottom: 50%;
+            background: yellow;
+        }
+
+    ```
+
+### 圣杯布局 和双飞翼布局
+
+* 圣杯布局
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            * {
+                text-align: center;
+            }
+
+            header {
+                background: magenta;
+
+            }
+
+            .content {
+                padding: 0 100px;
+            }
+
+            .center {
+                float: left;
+                width: 100%;
+                background: lightgreen;
+            }
+
+            .left {
+                float: left;
+                width: 100px;
+                background: lightpink;
+                margin-left: -100%;
+                position: relative;
+                left: -100px;
+            }
+
+            .right {
+                float: left;
+                width: 100px;
+                background: lime;
+                margin-left: -100px;
+                position: relative;
+                right: -100px;
+
+            }
+            .content::after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+
+            footer {
+                background: mediumorchid;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>头部</header>
+        <div class="content">
+            <div class="center">main</div>
+            <div class="left">left</div>
+            <div class="right">right</div>
+        </div>
+        <footer>尾部</footer>
+    </body>
+
+    </html>
+    ```
+* 双飞翼布局
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            * {
+                text-align: center;
+            }
+
+            header {
+                background: chartreuse;
+            }
+
+            .content {
+                /* padding: 0 100px; */
+                width: 100%;
+                float: left;
+            }
+
+            .center {
+                margin: 0 100px;
+                background: rgb(218, 49, 100);
+
+            }
+
+            .left {
+                width: 100px;
+                float: left;
+                background: lightcoral;
+                margin-left: -100%;
+            }
+
+            .right {
+                float: left;
+                width: 100px;
+                background: lightgreen;
+                margin-left: -100px;
+            }
+
+            footer {
+                background: lightslategrey;
+            }
+
+            .footer::after {
+                content: '';
+                display: block;
+                clear: both;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header>头部</header>
+        <div class="content">
+            <div class="center">main</div>
+
+        </div>
+        <div class="left">left</div>
+        <div class="right">right</div>
+        <footer class="footer">尾部</footer>
+    </body>
+
+    </html>
+    ```
+
+> 两者区别,dom结构的不一样,圣杯布局不用position定位,直接使用即可
+
+### 实现三列布局 (相对定位)
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            div {
+                height: 500px;
+            }
+
+            .box {
+                position: relative;
+            }
+
+            .left {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100px;
+                background: lime;
+            }
+
+            .right {
+                width: 100px;
+                background: magenta;
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            .middle {
+                background: orange;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="box">
+            <div class="left"></div>
+            <div class="middle"></div>
+            <div class="right"></div>
+        </div>
+    </body>
+
+    </html>
+    ```
+> 使用float+margin的方式的时候,需要把dom结构中的middle放到最下面
+
+    ```
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            div {
+                height: 500px;
+            }
+
+            .left {
+                width: 100px;
+                background: lime;
+                float: left;
+                /* margin-left: -100px; */
+            }
+
+            .right {
+                width: 100px;
+                background: magenta;
+                float: right;
+                /* margin-right: 100px; */
+            }
+
+            .middle {
+                /* width: 100%; */
+                margin-left: 100px;
+                margin-right: 100px;
+                background: orange;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="box">
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="middle"></div>
+
+        </div>
+    </body>
+
+    </html>
+    ```
+
+
+

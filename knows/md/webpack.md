@@ -35,4 +35,4 @@ https://juejin.cn/post/6996188856164810789
     * postcss-loader: 打包css样式,自动添加前缀,为css语法添加前缀
     * less-loader: 将less语法转为css语法
 3. file-loader : 修改打包后图片的储存路径，再根据配置修改我们引用的路径，使之对应引入.返回url
-4. url-loader: 将引入的文件进行编码,超过一定大小后,使用file-laoder
+4. url-loader: 将引入的文件进行编码,超过一定大小后,使用file-loader
