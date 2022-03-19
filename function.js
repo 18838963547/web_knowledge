@@ -54,6 +54,21 @@ function _deepClone (object) {
     }
     return newObj;
 }
+function _deepClone2(obj,hash=new WeakMap()){
+    if(obj == null) return obj;
+    if(obj instanceof Date) return new Date(obj)
+    if(obj instanceof RegExp) return new RegExp(obj) 
+    if(typeof obj != 'object') return obj
+    if(hash.has(obj)) return hash.get(obj)
+    let newObj = new obj.constructor()
+    hash.set(obj,newObj)
+    for(var key in obj){
+        if(obj.hasOwnPrototype(key)){
+            newObj[key] = _deepClone2(obj[key])
+        }
+    }
+    return newObj
+}
 // 防抖函数
 function _debounce (fn, wait) {
     let timer = null
@@ -155,6 +170,14 @@ function _carry (fn, ...args) {
     }
     return judge
 }
+// 柯里化
+function _carry2(fn){
+    let judge = (...args)=>{
+        fn.length == args.length ? fn(...args):
+        (...arg)=>judge(...args,...arg)
+    }
+    return judge
+}
 // 继承
 function Parent (name) {
     this.name = name
@@ -194,3 +217,4 @@ function _platArr (arr) {
     }, [])
 }
 // console.log(platArr([1, 2, [3, [4, [5]]]]))
+

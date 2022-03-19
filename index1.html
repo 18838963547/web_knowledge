@@ -7,30 +7,54 @@
     <title>Document</title>
     <style>
         div {
-            width: 100vw;
-            height: 50vw;
-            background-color: yellowgreen;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 50px 50px;
+            border-color: red transparent black transparent;
         }
 
-        .c1 {
-            width: 200px;
-            background-color: aquamarine;
-        }
-
-        .c2 {
-            flex: auto;
-            /* width: calc(100% - 200px); */
-            background-color: blueviolet;
+        .a-text::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-width: 0 40px 40px;
+            border-style: solid;
+            border-color: yellow transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <!-- <div class="c1"></div>
-        <div class="c2"></div> -->
-    </div>
+    <div class="a-text"></div>
+    <!-- <div class="a-img1">2</div>
+    <div class="a-text">3</div>
+    <div class="a-img2">4</div>
+    <div class="a-text">5</div>
+    <div class="a-img3">6</div>
+    <div class="a-text">7</div> -->
+    <!-- <script src="./index.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> -->
 
+    <script>
+        // $(function(){
+        // //获取文本的行高，并获取文本的高度，假设我们规定的行数是五行，那么对超过行数的部分进行限制高度，并加上省略号
+        // $('p').each(function(i, obj){
+        //         var lineHeight = parseInt($(this).css("line-height"));
+        //         var height = parseInt($(this).height());
+        //         if((height / lineHeight) >3 ){
+        //             $(this).addClass("p-after")
+        //             $(this).css("height","60px");
+        //         }else{
+        //             $(this).removeClass("p-after");
+        //         }
+        //     });
+        // })
+
+    </script>
 </body>
 
 </html>

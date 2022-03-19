@@ -1,45 +1,26 @@
-/**
- * @param {number[][]} matrix
- * @return {number}
- */
-var dx = [-1, 1, 0, 0]
-//      上 下 左 右
-var dy = [0, 0, -1, 1]
-var longestIncreasingPath = function (matrix) {
-    var m = matrix.length
-    var n = matrix[0].length
-    // 思路： 依次遍历每个位置的值，给每个位置的值答案。
-    // 1.创建二维数组
-    var max = 1
-    var dp = new Array(m).fill().map(() => new Array(n).fill(0))
-    for (var i = 0; i < m; i++) {
-        for (var j = 0; j < n; j++) {
-            // 这里找到每个点。然后开始上下左右的找。
-            max = Math.max(max, dfs(matrix, i, j, dp))
-        }
-    }
-    console.log(max)
-    return max
-};
+// 继承
 
-var dfs = function (matrix, x, y, dp) {
-    // 递归结束条件。 利用要存入的记忆值，来判断是否需要返回。
-    if (dp[x][y] != 0) {
-        return dp[x][y]
-    }
-    var k = 0
-    var max = 1
-    while (k < 4) {
-        let newX = x + dx[k];
-        let newY = y + dy[k];
-        if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && matrix[newX][newY] > matrix[x][y]) {
-            // 找到下一个点了，然后就递归找下一个点
-            max = Math.max(dfs(matrix, newX, newY, dp) + 1, max)
-        }
-        k++
-    }
-    dp[x][y] = max
-    return max
+function Parent () {
+    this.name = 'xiaoming'
+}
+Parent.prototype.eat = function () {
+    console.log(this.name)
 }
 
-longestIncreasingPath([[9, 9, 4], [6, 6, 8], [2, 1, 1]])
+function Sub () {
+
+}
+Sub.prototype = new Parent()
+Sub.prototype.milk = 'he'
+var sub1 = new Sub()
+// console.log(sub1.__proto__.__proto__ == Parent.prototype)
+// console.log(Sub.prototype.__proto__ == Parent.prototype) // sub1是Sub的实例对象。所以sub的隐式原型指向 Sub.prototype == new Parent(). 父类实例的隐式原型，指向的就是构造函数的原型
+// var sub2 = new Sub()
+// console.log(sub1)
+// console.log(sub2)
+
+const fxArr = ["One", "Two", "Three"]
+const fxArrs = fxArr.slice(0)
+fxArrs[1] = "love";
+console.log(fxArr) // ["One", "Two", "Three"]
+console.log(fxArrs) // ["One", "love", "Three"]
