@@ -6,40 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        div {
-            height: 500px;
+        div{
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 50px 50px;
+            border-color: red transparent black transparent;
         }
-
-        .left {
-            width: 100px;
-            background: lime;
-            float: left;
-            /* margin-left: -100px; */
-        }
-
-        .right {
-            width: 100px;
-            background: magenta;
-            float: right;
-            /* margin-right: 100px; */
-        }
-
-        .middle {
-            /* width: 100%; */
-            margin-left: 100px;
-            margin-right: 100px;
-            background: orange;
+        .a-text::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-width: 0 40px 40px;
+            border-style: solid;
+            border-color: yellow transparent;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="box">
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="middle"></div>
+    <div class="a-text"></div>
+    <!-- <div class="a-img1">2</div>
+    <div class="a-text">3</div>
+    <div class="a-img2">4</div>
+    <div class="a-text">5</div>
+    <div class="a-img3">6</div>
+    <div class="a-text">7</div> -->
+    <!-- <script src="./index.js"></script> -->
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script> -->
 
-    </div>
+    <script>
+        // $(function(){
+        // //获取文本的行高，并获取文本的高度，假设我们规定的行数是五行，那么对超过行数的部分进行限制高度，并加上省略号
+        // $('p').each(function(i, obj){
+        //         var lineHeight = parseInt($(this).css("line-height"));
+        //         var height = parseInt($(this).height());
+        //         if((height / lineHeight) >3 ){
+        //             $(this).addClass("p-after")
+        //             $(this).css("height","60px");
+        //         }else{
+        //             $(this).removeClass("p-after");
+        //         }
+        //     });
+        // })
+
+    </script>
 </body>
 
 </html>

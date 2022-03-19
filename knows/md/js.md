@@ -76,3 +76,86 @@
     1. 松耦合
     2. 灵活性高
     3. 可靠
+
+
+### 继承
+> 原型链
+1. 原型链继承
+    方式：子类直接等于父类的实例。 Sub.prototype = new Parent()
+    缺点：
+        1. 来自原型对象的所有属性被所有实例共享。
+        2. 创建子类实例时，无法向父类构造函数传参。
+
+2. 构造函数继承
+    * 方式： 在子类中使用call(this)来实现继承
+    * 缺点： 只继承了父类的属性和方法，没有继承原型上的属性和方法
+
+3. 组合继承（原型链继承和构造函数继承的合体）
+    * 方式： 使用上面的两种方法，完成了继承。但是对于父类的原型来说，是执行了两次的构造的。
+    * 第一次 children.prototype = new Parent()  第二次 Parent.call(this)
+
+4. 原型式继承
+    方式： 使用object.create()
+    * 弊端，使用的是浅拷贝，这样对于引用类型的数据，对于创建的不同的实例对象，内存地址可能相同，改变值会引起其他值的改变。
+
+5. 寄生式继承
+    方式： 就是在object.create()外面包裹一层函数，在函数中定义创建出来的对象的属性和方法
+
+6. 寄生组合式继承
+    方式： 子类通过构造函数的继承（call）方法来继承父类的属性和方法，子类通过原型式继承（object.create()）来继承父类原型上的的属性和方法
+7. es5的继承和es6的继承的区别
+    * es5的继承是先创建子类之后，再调用父类的构造函数向已有的对象里面添加属性
+    * es6的继承是先通过父类创建一个空对象，然后添加属性和方法，再将该对象作为子类的实例。
+### typeof 和 instanceOf
+ * typeof 用来判断数据的基本类型，但是他不能判断出null object array 的具体类型，只能判断出他们都属于object
+    > 原理： 每个数据在存储的时候都有自己的数据类型标识，通过判断他们的标识来判断的。
+    > object number  undefined function symbol string boolean
+ * instanceOf 利用原型链来判断当前所属的类型。他只能判断引用类型，不能判断基本类型的数据。因为基本类型没有原型链啊
+ * object.prototype.string.call(类型)  [object 类型]
+
+
+### splice 和 slice  substr和substring
+1. splice和slice 对数组操作
+    * splice（开始位置，删除的数量，新增的元素） 会改变原数组
+    * slice （开始的位置，结束位置） 创建一个新的数组，不会影响原数组。   
+
+2. substr 和 substring
+    * substr(开始的位置，数量)
+    * substring（开始的位置，结束的位置）\
+
+### 深拷贝和浅拷贝的区别
+* 浅拷贝 
+    * 浅拷贝是直接拷贝了当前对象的地址。
+    * 浅拷贝的方式
+        1. object.assign({},obj)
+        2. [...obj]
+        3. Array.prototype.slice()
+        4. Array.prototype.concat()
+
+* 深拷贝
+    * 深拷贝是新开辟了一个内存空间，将原有的内容中的数据重新拷贝一份，两者数据不会相互影响。
+    * 深拷贝的方式
+        1. json.parse(json.stringify())  弊端是不能拷贝 function symbol 和 undefined
+        2. 手写循环递归函数
+        3. 使用loadsh库的_cloneDeep函数
+
+
+### 原型链
+1. 构造函数创建的实例对象的隐式原型指向构造函数的原型
+2. 构造函数的原型对象是一个对象，所以构造函数的原型对象的隐式原型指向的是对象的原型对象object.prototype
+3. 对象的原型对象的隐式原型，指向的就是null了
+4. 但是构造函数其实也属于被构造出来的，它是被Function构造函数构造出来的，所以构造出来的构造函数的隐式原型指向的是Function.prototype.
+5. 这里的Function.prototype是个对象了，所以它就指向了object.prototype了。
+6. object.prototype又伴随着 function Object()函数，所以Object()的隐式原型指向的就是Function.prototype了
+7. 既然Function.prototype是个原型，那么对应他本身的constructor就是 function Function（）了。在这里就好玩了，function Function（）的隐式原型指向的依旧是Function.prototype。
+
+* Function是最顶层的构造器。而Object是最顶层的对象
+* 从原型链上来讲，Function继承了Object
+* 从构造器上来讲，Object由Function构造
+
+
+### onclick 和 addEventlistener的区别
+* onclick 只能绑定html元素，而且只能出现一次，多次的话后面会覆盖前面的
+* addEventLIstener 可以监听所有的DOM，而不仅仅是html元素
+* addEventlistener可以对一个事件绑定多个方法， 不会相互覆盖 
+* addEventlistener可以控制lister的触发阶段，冒泡或捕获阶段。
