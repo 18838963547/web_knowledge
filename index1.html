@@ -7,39 +7,30 @@
     <title>Document</title>
     <style>
         div {
-            height: 500px;
+            width: 100vw;
+            height: 50vw;
+            background-color: yellowgreen;
         }
 
-        .left {
-            width: 100px;
-            background: lime;
-            float: left;
-            /* margin-left: -100px; */
+        .c1 {
+            width: 200px;
+            background-color: aquamarine;
         }
 
-        .right {
-            width: 100px;
-            background: magenta;
-            float: right;
-            /* margin-right: 100px; */
-        }
-
-        .middle {
-            /* width: 100%; */
-            margin-left: 100px;
-            margin-right: 100px;
-            background: orange;
+        .c2 {
+            flex: auto;
+            /* width: calc(100% - 200px); */
+            background-color: blueviolet;
         }
     </style>
 </head>
 
 <body>
-    <div class="box">
-        <div class="left"></div>
-        <div class="right"></div>
-        <div class="middle"></div>
-
+    <div>
+        <!-- <div class="c1"></div>
+        <div class="c2"></div> -->
     </div>
+
 </body>
 
 </html>

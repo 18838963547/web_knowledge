@@ -1,70 +1,45 @@
 /**
- * @param {number} n
+ * @param {number[][]} matrix
  * @return {number}
  */
-var numSquares = function (n) {
-    if (n == 1) return 1;
-    // 找出离N中全部的完全平方数
-    var arr = [], i = 1
-    while (i * i <= n) {
-        arr[i - 1] = i * i
-        i++
-    }
-    var res = Infinity;
-    // 找出
-    let dfs = function (m, ans) {
-        // 递归出口
-        if (m == 1 || arr.includes(m)) {
-            res = Math.min(ans + 1, res)
-            return;
-        }
-        for (var i = arr.length - 1; i >= 0; i--) {
-            if (arr[i] > m) continue;
-            const m1 = m - arr[i]
-            ans++;
-            dfs(m1, ans)
-            ans--
+var dx = [-1, 1, 0, 0]
+//      上 下 左 右
+var dy = [0, 0, -1, 1]
+var longestIncreasingPath = function (matrix) {
+    var m = matrix.length
+    var n = matrix[0].length
+    // 思路： 依次遍历每个位置的值，给每个位置的值答案。
+    // 1.创建二维数组
+    var max = 1
+    var dp = new Array(m).fill().map(() => new Array(n).fill(0))
+    for (var i = 0; i < m; i++) {
+        for (var j = 0; j < n; j++) {
+            // 这里找到每个点。然后开始上下左右的找。
+            max = Math.max(max, dfs(matrix, i, j, dp))
         }
     }
-    dfs(n, 0)
-    return res
+    console.log(max)
+    return max
 };
-// console.log(numSquares(65))
 
-function two (n) {
-    var queue = new Array()
-    //记录访问过的节点值
-    var visited = new Set()
-    queue.push(0);
-    visited.add(0);
-    //树的第几层
-    var level = 0;
-    while (queue.length) {
-        //每一层的节点数量
-        var size = queue.length;
-        level++;
-        //遍历当前层的所有节点
-        for (var i = 0; i < size; i++) {
-            //节点的值
-            var digit = queue.pop();
-            //访问当前节点的子节点，类比于二叉树的左右子节点
-            for (var j = 1; j <= n; j++) {
-                //子节点的值
-                var nodeValue = digit + j * j;
-                //nodeValue始终是完全平方数的和，当他等于n的
-                //时候直接返回
-                if (nodeValue == n)
-                    return level;
-                //如果大于n，终止内层循环
-                if (nodeValue > n)
-                    break;
-                if (!visited.has(nodeValue)) {
-                    queue.push(nodeValue);
-                    visited.add(nodeValue);
-                }
-            }
-        }
+var dfs = function (matrix, x, y, dp) {
+    // 递归结束条件。 利用要存入的记忆值，来判断是否需要返回。
+    if (dp[x][y] != 0) {
+        return dp[x][y]
     }
-    return level;
+    var k = 0
+    var max = 1
+    while (k < 4) {
+        let newX = x + dx[k];
+        let newY = y + dy[k];
+        if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length && matrix[newX][newY] > matrix[x][y]) {
+            // 找到下一个点了，然后就递归找下一个点
+            max = Math.max(dfs(matrix, newX, newY, dp) + 1, max)
+        }
+        k++
+    }
+    dp[x][y] = max
+    return max
 }
-console.log(two(12))
+
+longestIncreasingPath([[9, 9, 4], [6, 6, 8], [2, 1, 1]])
