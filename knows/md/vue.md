@@ -137,3 +137,10 @@ https://juejin.cn/post/6975422620988604452#heading-5
 1. 对于新添加的属性或删除的属性，界面不会更新，需要使用this.$set 或者 this.$delete
 2. 直接更改数组的下标，界面不会更新
 3. 性能问题，绑定问题（自己平常说的）
+
+
+### vuex的原理
+1. vuex实际上是一个对象
+2. 这个对象里面有install方法和Store类
+3. store实例里将传入的state包装为data,然后调用new Vue()创建响应式数据
+4. 调用vue.use方法，执行install，在install方法里， 调用vue.minix将当前的vuex中的store实例混入到Vue实例的options上，在组件初始化的时候，挂载到每个组件上
