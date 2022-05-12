@@ -159,3 +159,38 @@
 * addEventLIstener 可以监听所有的DOM，而不仅仅是html元素
 * addEventlistener可以对一个事件绑定多个方法， 不会相互覆盖 
 * addEventlistener可以控制lister的触发阶段，冒泡或捕获阶段。
+
+### 事件流
+* 捕获阶段
+* 目标阶段
+* 冒泡阶段  addEventListener的第三个值默认为false，就是默认冒泡
+
+#### 执行顺序
+1. 先绑定捕获，后绑定冒泡
+    * 执行顺序就是先执行捕获，然后执行冒泡
+2. 先绑定冒泡，后绑定捕获
+    * 对于目标元素，先绑定那个就先执行那个，
+    * 对于非目标元素，先触发捕获阶段，然后执行冒泡阶段
+
+### xmlHttpRequest
+> 浏览器的一个api，用来提供客户端与服务端的数据链接
+
+```
+    // 创建xhr对象
+    var xhr = new XMLHttpRequest()
+    xhr.open('post','/servier')
+    xhr.send(formdata)
+    xhr.onreadystatechange = function(){ 
+        // 当xhr.readyState改变的时候，都会触发onreadystatechange方法
+        if(xhr.readyState){
+            // 0：初始状态，未打开
+            // 1: 已打卡，未发送
+            // 2: 已获取响应头，send方法已被调用，响应状态和响应头已经可以获取到了
+            // 3： 正在下载响应体
+            // 4: 下载完毕，整个数据传输过程结束
+        }
+    }
+    // 其他属性
+    xhr.timeout = 3000
+    xhr.responseType = 'text'
+```

@@ -218,3 +218,4 @@ function _platArr (arr) {
 }
 // console.log(platArr([1, 2, [3, [4, [5]]]]))
 
+// 堆
