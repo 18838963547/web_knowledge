@@ -1,25 +1,45 @@
-// 
-function sendFormDate(){
-    // 创建formdata对象
-    var  formdata = new FormData()
-    formdata.append('username','zhangsan')
-    formdata.append('userage',18)
-
-    // 创建xhr对象
-    var xhr = new XMLHttpRequest()
-    xhr.open('post','/servier')
-    xhr.send(formdata)
-    xhr.onreadystatechange = function(){ 
-        // 当xhr.readyState改变的时候，都会触发onreadystatechange方法
-        if(xhr.readyState){
-            // 0：初始状态，未打开
-            // 1: 已打卡，未发送
-            // 2: 已获取响应头，send方法已被调用，响应状态和响应头已经可以获取到了
-            // 3： 正在下载响应体
-            // 4: 下载完毕，整个数据传输过程结束
-        }
+var minMutation = function(start, end, bank) {
+    const cnt = new Set();
+    const visited = new Set();
+    const keys = ['A', 'C', 'G', 'T'];
+    for (const w of bank) {
+        cnt.add(w);
     }
-    // 其他属性
-    xhr.timeout = 3000
-    xhr.responseType = 'text'
-}
+    if (start === end) {
+        return 0;
+    }
+    if (!cnt.has(end)) {
+        return -1;
+    }
+    const queue = [start];
+    visited.add(start);
+    let step = 1;
+    while (queue.length) {
+        debugger;
+        console.log(queue,'queue')
+        const sz = queue.length;
+        for (let i = 0; i < sz; i++) {
+            const curr = queue.shift();
+            for (let j = 0; j < 8; j++) {
+                for (let k = 0; k < 4; k++) {
+                    if (keys[k] !== curr[j]) {
+                        const sb = [...curr];
+                        sb[j] = keys[k];
+                        const next = sb.join('');
+                        if (!visited.has(next) && cnt.has(next)) {
+                            if (next === end) {
+                                return step;
+                            }
+                            queue.push(next);
+                            visited.add(next);
+                        }
+                    }
+                }
+            }
+        }
+        step++;
+    }
+    return -1;
+};
+
+minMutation("AAAAACCC","AACCCCCC",["AAAACCCC","AAACCCCC","AACCCCCC"])

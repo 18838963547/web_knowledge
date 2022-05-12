@@ -144,3 +144,14 @@ https://juejin.cn/post/6975422620988604452#heading-5
 2. 这个对象里面有install方法和Store类
 3. store实例里将传入的state包装为data,然后调用new Vue()创建响应式数据
 4. 调用vue.use方法，执行install，在install方法里， 调用vue.minix将当前的vuex中的store实例混入到Vue实例的options上，在组件初始化的时候，挂载到每个组件上
+
+### 组件通信
+> $on：监听事件（在vue3中被去掉了）。同时被去掉的还有$off,$once。同时在VUE3中，不在使用eventBus.
+> $children 移除，不在使用，转而使用ref进行替换
+> $listeners 移除，因为vue3中的事件监听都是1⃣以on开头的attribute，所以直接归类到$attrs上，对于接收事件的$listeners就没有存在的意义了。
+1. 父子组件通信
+  props / $emit / ref / $parent / $attrs
+2. 兄弟组件通信
+  $parent / vuex / enventBus / $root
+3. 跨层级通信
+  provide+inject  / vuex / eventBus
