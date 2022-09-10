@@ -165,3 +165,74 @@ https://juejin.cn/post/6975422620988604452#heading-5
     v-if的优先级高于v-for
     * 如果两者写在一起，那么先执行v-if，就会获取不到循环的元素，所以就会报错。
     * 源码层面：先执行if再执行for,目的就是为了避免有人非要写一起吧。
+
+### vue生命周期
+思路：
+1. 给出概念
+2. 列举各个生命周期各阶段
+3. 阐述整体流程
+4. 结合实践
+5. 在vue3中的变化
+
+答案：
+1. vue2生命周期
+    1. 创建vue实例
+    2. 初始化事件和生命周期
+    3. 执行beforeCreate（）
+    4. 初始化data,methods等属性 / 初始化注入，校验
+    5. 执行created()
+    6. 判断是否有el属性
+        6.1 如果有，判断是否有template模板
+            6.1.1 有template模板，就把模板编译为渲染函数
+            6.1.2 没有template模板，就编译el的html标签元素作为模板
+        6.2 如果没有，就等待加载了el后，在执行下一步
+        此时只是在内存中渲染好了模板，并没有挂载到页面上
+    7. 在挂载前，render函数首次被调用生成虚拟dom，
+    8. 执行beforeMount（在挂载之前）
+    7. 创建vue实例下的$el(虚拟)，并将虚拟dom替换成真正的dom
+    9. Mounted
+    12. 执行阶段，如果有更新
+    13. 执行beforeUpdate
+    14. 执行updated
+    15. 销毁阶段beforedestroy
+    16. 销毁destroyed
+
+2. vue3的生命周期
+    1. 先通过Vue.createApp(options)创建出一个app实例，app.mounted(el)来调用，如果没有el,则直接不再执行
+    2. 在vue3中还有setup生命周期，这个生命周期最先执行的。
+    2. 初始化事件和生命周期
+    3. beforeCreate()
+    4. 初始化属性和方法 / 初始化注入，校验
+    5. created()
+    6. 判断是否有template属性
+        6.1 有，将模板编译为渲染函数
+        6.2 无，将根标签作为模板
+    7. 在挂载执行，执行render函数生成虚拟dom
+    8. beforeMounte
+    9. 将虚拟dom转为真实的dom结构并挂载
+    10. Mounted
+    11. 执行更新阶段
+    12. 执行阶段，如果有更新
+    13. 执行beforeUpdate
+    14. 执行updated
+    15. 卸载阶段beforeUnmounte
+    16. 卸载UnMounted
+3. 同上
+4. 结合实践
+    > 在不同阶段的时候执行不同的任务，beforeCreate不常用，但也是重点关注的地方
+    1. beforeCreate阶段：通常用于插件开发中执行一些初始化任务
+    2. setup什么时候执行的？为什么
+
+### vue双向绑定使用和原理 v-model
+思路：
+1. 双向绑定的定义
+2. 双向绑定带来的好处
+3. 在哪里使用双向绑定
+4. 使用方式，使用细节，vue3变化
+5. 原理
+
+答案：
+> v-model作为语法糖，就是 v-bind和@input的缩写。
+> input，textarea标签使用value/input  checkbox和radio使用checkout和change  select元素使用value和change
+> 同时也可以使用不同的修饰符.使用model:{prop:'value',event:'change'}来修改
+> 对于v-bind.sync(:title.sync='pageTitle'),相当于在子组件中调用了$emit('updata:title',xxx)方法
