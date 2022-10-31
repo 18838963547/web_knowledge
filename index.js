@@ -1,45 +1,28 @@
-var minMutation = function(start, end, bank) {
-    const cnt = new Set();
-    const visited = new Set();
-    const keys = ['A', 'C', 'G', 'T'];
-    for (const w of bank) {
-        cnt.add(w);
+/**
+ * @param {number} maxChoosableInteger
+ * @param {number} desiredTotal
+ * @return {boolean}
+ */
+var canIWin = function (maxChoosableInteger, desiredTotal) {
+    if (maxChoosableInteger >= desiredTotal) return true
+    const set = []
+    for (let i = 1; i <= maxChoosableInteger; i++) {
+        set.push(i)
     }
-    if (start === end) {
-        return 0;
-    }
-    if (!cnt.has(end)) {
-        return -1;
-    }
-    const queue = [start];
-    visited.add(start);
-    let step = 1;
-    while (queue.length) {
-        debugger;
-        console.log(queue,'queue')
-        const sz = queue.length;
-        for (let i = 0; i < sz; i++) {
-            const curr = queue.shift();
-            for (let j = 0; j < 8; j++) {
-                for (let k = 0; k < 4; k++) {
-                    if (keys[k] !== curr[j]) {
-                        const sb = [...curr];
-                        sb[j] = keys[k];
-                        const next = sb.join('');
-                        if (!visited.has(next) && cnt.has(next)) {
-                            if (next === end) {
-                                return step;
-                            }
-                            queue.push(next);
-                            visited.add(next);
-                        }
-                    }
-                }
+    const dfs = function (choose, sum) {
+        for (let i = 0; i < choose.length; i++) {
+            if (sum + choose[i] >= desiredTotal) {
+                return true
+            }
+            const setCopy = JSON.parse(JSON.stringify(choose))
+            const idx = setCopy.indexOf(choose[i])
+            setCopy.splice(idx, 1)
+            console.log(setCopy, sum + choose[i])
+            if (!dfs(setCopy, sum + choose[i])) {
+                return true
             }
         }
-        step++;
+        return false
     }
-    return -1;
+    return dfs(set, 0)
 };
-
-minMutation("AAAAACCC","AACCCCCC",["AAAACCCC","AAACCCCC","AACCCCCC"])
