@@ -350,3 +350,11 @@
     * 现在vue3也是推荐使用pinia,使用vue3+pinia会是更好的组合
 6. v-for和v-if的优先级 （vue2中和vue3中）
 
+
+
+### 测试dev分支撤回合并
+
+1. 改变dev分支
+2. 提交dev分支到dev
+3. 从master合并dev分支的数据
+4. 撤回master上的分支合并操作。还原
