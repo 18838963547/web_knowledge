@@ -577,3 +577,7 @@ a(1, 1, 1);
 
 47. http的缓存
 cache-control的值在请求头和响应头中都存在，但是相应的值是不一样的，有区别
+
+48. Babel的原理和实现方式
+  作用：就是js编译器，将新版本的语法转换为向后兼容的新的js代码。
+  流程：解析(parsing) ——> 转换(transformimg) ——> 生成(generating)
