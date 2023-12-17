@@ -175,7 +175,7 @@ https://juejin.cn/post/6975422620988604452#heading-5
 5. 在vue3中的变化
 
 答案：
-1. vue2生命周期
+1. vue2生命周期  
     1. 创建vue实例
     2. 初始化事件和生命周期
     3. 执行beforeCreate（）
